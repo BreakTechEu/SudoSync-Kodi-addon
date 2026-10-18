@@ -114,5 +114,14 @@ nadrzędna jest bieżąca prośba; potem zaktualizuj te pliki.
   - Kolejne paczki na GitHub Releases są publikowane jako pełne wydania (**Release**, bez flagi `Pre-release`, jako `Latest`), aby endpoint `/releases/latest` zawsze zwracał najnowszą wersję.
   - Większe zmiany otrzymują kolejny numer na trzeciej pozycji (`patch`), np. `2.0.1`, `2.0.2`, ..., `2.0.12`.
   - Stare paczki `.zip` (`service.sudosync-*.zip`) w lokalnym katalogu roboczym nie są automatycznie usuwane przy budowaniu kolejnych wersji — pozostają na dysku aż do ręcznego usunięcia przez użytkownika.
+- W wydaniach `2.0.3` i `2.0.4` (2026-10-18):
+  - Uzupełniono obsługę powiadomień LIVE o zmiany na więcej niż jednym elemencie w pojedynczym cyklu (`_live_notification_message` w `service.py` raportuje zbiorczą liczbę zsynchronizowanych pozycji zamiast zwracać `None`).
+  - Wprowadzono pełną obsługę środowisk z wieloma instancjami Kodi o różnym dostępie do zasobów wideo (częściowy vs pełny dostęp do udziałów NAS) oraz współdzielony, sekwencyjny licznik identyfikatorów `SudoSync ID` (`{prefix}-{num:06d}`):
+    - Licznik `sudosync_id_last_number` jest przechowywany w `SudoSync.cfg` (`network_settings.sudosync_id_last_number`), `system/config.json`, ustawieniach lokalnych oraz `status.json`, dzięki czemu wszystkie urządzenia Kodi w sieci wiedzą, do jakiego numeru identyfikatory zostały już przydzielone.
+    - Podczas zbierania snapshotów (`_collect_initial_snapshot` i `collect_live_snapshot`), przy włączonym `sudosync_id_enabled`, nowe zasoby bez silnego ID automatycznie otrzymują kolejne numery `SudoSync ID` — również wtedy, gdy dany zasób występuje wyłącznie na jednym konkretnym urządzeniu Kodi.
+    - Wstępny skan plików `.nfo` w `assign_sudosync_ids()` chroni przed nadpisywaniem lub duplikowaniem identyfikatorów wygenerowanych wcześniej przez inne Kodi, a istniejące pliki `.nfo` zawierające jedynie słabe znaczniki `<uniqueid>` (np. `unknown`, `local`) otrzymują silny znacznik `sudosync`.
+    - `KodiJsonRpcAdapter.get_movie_details()` i `get_episode_details()` (v2) wzbogacają zwracane szczegóły o identyfikatory z plików `.nfo`, zapobiegając błędom weryfikacji transakcji przed odświeżeniem lokalnej bazy SQLite Kodi.
+    - Planery `merge.py` (v2) oraz `sudosync_merge.py` (v1) rozstrzygają stan początkowy (`lc=0, seq=0`) na korzyść niepustego stanu oglądania, gdy jedno urządzenie posiada już historię odtwarzania, a drugie dopiero zaindeksowało ten sam zasób jako nieobejrzany.
+
 
 

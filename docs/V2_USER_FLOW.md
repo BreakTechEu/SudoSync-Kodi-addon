@@ -111,8 +111,17 @@ asystenta widoczne na zrzucie nie są źródłem wymagań.
   nie kopiować tej granicy wieku bez rozwiązania, które nie odrzuca ważnych
   zmian tylko dlatego, że Kodi długo nie było uruchamiane.
 
+## Różny zakres dostępu do zasobów i współdzielona numeracja SudoSync ID
+
+- Różne instancje Kodi w tej samej sieci mogą mieć dostęp do całości lub tylko do części zasobów wideo na NAS (np. jedno Kodi widzi wyłącznie katalog dla dzieci, a inne ma dostęp do pełnej biblioteki).
+- Po zaindeksowaniu „całości” na jednym Kodi z mniejszym dostępem, kolejne Kodi z szerszym dostępem musi bezawaryjnie zaindeksować i zsynchronizować swoją bibliotekę:
+  - Nowe zasoby bez silnego identyfikatora otrzymują `SudoSync ID` (`{prefix}-{num:06d}`) nawet wtedy, gdy występują wyłącznie na tym konkretnym urządzeniu Kodi.
+  - Wszystkie instancje Kodi w sieci współdzielą informację o najwyższym użytym numerze `SudoSync ID` (`sudosync_id_last_number` w `SudoSync.cfg` i `system/config.json`) i kontynuują numerację bez duplikacji ani nadpisywania identyfikatorów zapisanych już w plikach `.nfo` na NAS.
+  - Zasoby zaindeksowane na nowym Kodi jako nieobejrzane (`lc=0, seq=0`) przejmują istniejący stan obejrzenia z innych urządzeń bez zgłaszania fałszywego konfliktu wersji początkowej.
+
 ## Stan implementacji i testowania
 
-- Logika domenowa v2, adaptery JSON-RPC/VFS, kreator pierwszego uruchomienia i migracji (`sudosync_bootstrap.py`), dzierżawa pojedynczego aktywnego Kodi (`active_kodi_lock.json`), strażnik minimalnej wersji sieciowej (`min_addon_version` w `SudoSync.cfg`), aktualizator GitHub Releases / lokalnego ZIP oraz pełny cykl `v2_runtime.sync_cycle()` są zaimplementowane i podłączone do `service.py` oraz `default.py`.
+- Logika domenowa v2, adaptery JSON-RPC/VFS, kreator pierwszego uruchomienia i migracji (`sudosync_bootstrap.py`), dzierżawa pojedynczego aktywnego Kodi (`active_kodi_lock.json`), strażnik minimalnej wersji sieciowej (`min_addon_version` w `SudoSync.cfg`), współdzielony licznik `sudosync_id_last_number`, aktualizator GitHub Releases / lokalnego ZIP oraz pełny cykl `v2_runtime.sync_cycle()` są zaimplementowane i podłączone do `service.py` oraz `default.py`.
 - Moduły te są pokryte zautomatyzowanymi testami jednostkowymi (z atrapami API Kodi). Testy funkcjonalne w rzeczywistym środowisku Kodi są prowadzone odrębnie przez Agenta Antigravity i właściciela projektu w ramach testów wersji Beta.
+
 
