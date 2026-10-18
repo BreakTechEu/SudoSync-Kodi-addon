@@ -115,9 +115,12 @@ asystenta widoczne na zrzucie nie są źródłem wymagań.
 
 - Różne instancje Kodi w tej samej sieci mogą mieć dostęp do całości lub tylko do części zasobów wideo na NAS (np. jedno Kodi widzi wyłącznie katalog dla dzieci, a inne ma dostęp do pełnej biblioteki).
 - Po zaindeksowaniu „całości” na jednym Kodi z mniejszym dostępem, kolejne Kodi z szerszym dostępem musi bezawaryjnie zaindeksować i zsynchronizować swoją bibliotekę:
-  - Nowe zasoby bez silnego identyfikatora otrzymują `SudoSync ID` (`{prefix}-{num:06d}`) nawet wtedy, gdy występują wyłącznie na tym konkretnym urządzeniu Kodi.
+  - W wersji 2.0.5 identyfikator `SudoSync ID` (`{prefix}-{num:06d}`) jest nadawany wszystkim pozycjom wideo w bibliotece jako niezależny, równoległy identyfikator sieci lokalnej (niezależnie od tego, czy plik posiada już identyfikatory IMDb/TMDb/TVDb/Trakt).
+  - Jedynym wyjątkiem są pozycje posiadające już niepusty identyfikator typu `sudosync` (nie nadpisujemy istniejącego SudoSync ID).
+  - Podczas wstrzykiwania do pliku `.nfo` zachowywane są wszystkie istniejące znaczniki `<uniqueid>`, a tag `sudosync` otrzymuje `default="false"` (jeżeli w pliku jest już inny tag `default="true"`) lub `default="true"` (gdy w pliku nie ma tagu domyślnego).
   - Wszystkie instancje Kodi w sieci współdzielą informację o najwyższym użytym numerze `SudoSync ID` (`sudosync_id_last_number` w `SudoSync.cfg` i `system/config.json`) i kontynuują numerację bez duplikacji ani nadpisywania identyfikatorów zapisanych już w plikach `.nfo` na NAS.
   - Zasoby zaindeksowane na nowym Kodi jako nieobejrzane (`lc=0, seq=0`) przejmują istniejący stan obejrzenia z innych urządzeń bez zgłaszania fałszywego konfliktu wersji początkowej.
+  - Przed rozpoczęciem długiej operacji przypisywania SudoSync ID użytkownik otrzymuje w GUI Kodi wyraźny komunikat ostrzegawczy z prośbą o nieprzerywanie pracy.
 
 ## Stan implementacji i testowania
 

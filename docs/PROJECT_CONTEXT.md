@@ -122,6 +122,12 @@ nadrzędna jest bieżąca prośba; potem zaktualizuj te pliki.
     - Wstępny skan plików `.nfo` w `assign_sudosync_ids()` chroni przed nadpisywaniem lub duplikowaniem identyfikatorów wygenerowanych wcześniej przez inne Kodi, a istniejące pliki `.nfo` zawierające jedynie słabe znaczniki `<uniqueid>` (np. `unknown`, `local`) otrzymują silny znacznik `sudosync`.
     - `KodiJsonRpcAdapter.get_movie_details()` i `get_episode_details()` (v2) wzbogacają zwracane szczegóły o identyfikatory z plików `.nfo`, zapobiegając błędom weryfikacji transakcji przed odświeżeniem lokalnej bazy SQLite Kodi.
     - Planery `merge.py` (v2) oraz `sudosync_merge.py` (v1) rozstrzygają stan początkowy (`lc=0, seq=0`) na korzyść niepustego stanu oglądania, gdy jedno urządzenie posiada już historię odtwarzania, a drugie dopiero zaindeksowało ten sam zasób jako nieobejrzany.
+- W wydaniu `2.0.5` (2026-10-18):
+  - Bezwzględne nadawanie `SudoSync ID`: identyfikator jest nadawany wszystkim pozycjom wideo w bibliotece jako niezależny, równoległy identyfikator sieci lokalnej (niezależnie od obecności IMDb/TMDb/TVDb/Trakt), z pominięciem wyłącznie plików posiadających już identyfikator typu `sudosync` (ochrona przed nadpisaniem).
+  - Podczas wstrzykiwania do istniejących plików `.nfo` zachowywane są wszystkie dotychczasowe tagi `<uniqueid>`, a nowy znacznik otrzymuje `default="false"` (gdy w pliku istnieje już tag `default="true"`) lub `default="true"` (gdy w pliku nie ma tagu domyślnego).
+  - Naprawiono błąd JSON-RPC `-32602: Invalid params` w `VideoLibrary.GetEpisodes` pod Kodi 21: usunięto parametr `"sort"` z wywołania JSON-RPC, a deterministyczną kolejność zachowano po stronie Pythona (sortowanie po `episodeid`).
+  - Dodano modalne okno informacyjne `Dialog().ok` oraz powiadomienie toast `Dialog().notification` przed rozpoczęciem skanowania biblioteki w akcji `assignids`, informujące o możliwym długim czasie trwania operacji na dużej bibliotece NAS i zalecające nieprzerywanie pracy.
+
 
 
 
