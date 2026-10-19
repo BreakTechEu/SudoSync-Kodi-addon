@@ -120,7 +120,7 @@ asystenta widoczne na zrzucie nie są źródłem wymagań.
   - Podczas wstrzykiwania do pliku `.nfo` zachowywane są wszystkie istniejące znaczniki `<uniqueid>`, a tag `sudosync` otrzymuje `default="false"` (jeżeli w pliku jest już inny tag `default="true"`) lub `default="true"` (gdy w pliku nie ma tagu domyślnego).
   - Wszystkie instancje Kodi w sieci współdzielą informację o najwyższym użytym numerze `SudoSync ID` (`sudosync_id_last_number` w `SudoSync.cfg` i `system/config.json`) i kontynuują numerację bez duplikacji ani nadpisywania identyfikatorów zapisanych już w plikach `.nfo` na NAS.
   - Zasoby zaindeksowane na nowym Kodi jako nieobejrzane (`lc=0, seq=0`) przejmują istniejący stan obejrzenia z innych urządzeń bez zgłaszania fałszywego konfliktu wersji początkowej.
-  - Przed rozpoczęciem długiej operacji przypisywania SudoSync ID użytkownik otrzymuje w GUI Kodi wyraźny komunikat ostrzegawczy z prośbą o nieprzerywanie pracy.
+  - Operacja przypisywania SudoSync ID (zarówno faza 1: odczyt i skanowanie biblioteki, jak i faza 2: nadawanie identyfikatorów) korzysta ze wspólnego modalnego okna dialogowego postępu (`DialogProgress`) na pierwszym planie z aktywnym przyciskiem „Anuluj”. Okno wyświetla bieżący etap, licznik pozycji i postęp procentowy oraz zawiera wyraźną informację o automatycznym zamknięciu po zakończeniu. W przypadku kliknięcia „Anuluj” operacja jest bezpiecznie i atomowo przerywana po bieżącej operacji, ze zwolnieniem blokad i bezpiecznym wycofaniem częściowych zmian.
 
 ## Stan implementacji i testowania
 
