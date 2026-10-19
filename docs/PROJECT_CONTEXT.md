@@ -9,16 +9,14 @@ nadrzędna jest bieżąca prośba; potem zaktualizuj te pliki.
 ## Cel i repozytorium
 
 - Projekt: `BreakTechEu/SudoSync-Kodi-addon`.
-- `master` jest docelową gałęzią główną dla v2.
-- `v1-stable` to gałąź stabilnej wersji SudoSync 1.0.0 i jest tylko do odczytu.
-- Rozwój v2 prowadzimy na `v2/rewrite-2026-10-10`, a do `master` integrujemy
-  v2 uzgodnioną ścieżką przeglądu. Nie traktuj `master` jako gałęzi stabilnej wersji SudoSync 1.0.0 ani
-  `v1-stable` jako celu zmian v2.
+- `master` jest aktywną gałęzią główną repozytorium, na której bezpośrednio rozwijana i utrzymywana jest linia SudoSync 2.x.
+- `v1-stable` to zamrożona gałąź tylko do odczytu dla stabilnego wydania SudoSync 1.0.0.
+- Gałąź robocza `v2/rewrite-2026-10-10` była historyczną gałęzią deweloperską, która została scalona do `master` i usunięta (14.10.2026). W repozytorium istnieją wyłącznie dwie gałęzie (`master` oraz `v1-stable`).
+- Nie traktuj `master` jako gałęzi stabilnej wersji SudoSync 1.0.0 ani `v1-stable` jako celu zmian v2.
 - Stan gałęzi, kodu i testów sprawdzaj na początku sesji — ten plik nie jest
   źródłem aktualnego statusu Git.
 - Aktualizuj wydania i paczki ZIP na GitHubie tak, aby inne narzędzia AI miały dostęp do aktualnego stanu kodu i artefaktów.
-- Audyt zewnętrzny wykonuj dopiero przed przekazaniem zmian do `master` albo
-  przygotowaniem wtyczki do testu na rzeczywistym Kodi.
+- Audyt zewnętrzny wykonuj po zakończeniu implementacji i zaliczeniu testów przed przygotowaniem wtyczki do testu na rzeczywistym Kodi.
 
 ## Uzgodniony model użycia
 
