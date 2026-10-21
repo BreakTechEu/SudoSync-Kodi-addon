@@ -9,6 +9,7 @@ nadrzędna jest bieżąca prośba; potem zaktualizuj te pliki.
 ## Cel i repozytorium
 
 - Projekt: `BreakTechEu/SudoSync-Kodi-addon`.
+- **Znaczenie wersji:** SudoSync 2.x jest rozwinięciem tego samego dodatku z wersji 1.x, rozszerzonym o dodatkowe opcje i możliwości. Nie jest nowym programem tworzonym od zera. Zachowuj i rozwijaj sprawdzone zachowania v1, w tym działający model LIVE, chyba że konkretna zmiana wymaga ich świadomej modyfikacji.
 - `master` jest aktywną gałęzią główną repozytorium, na której bezpośrednio rozwijana i utrzymywana jest linia SudoSync 2.x.
 - `v1-stable` to zamrożona gałąź tylko do odczytu dla stabilnego wydania SudoSync 1.0.0.
 - Gałąź robocza `v2/rewrite-2026-10-10` była historyczną gałęzią deweloperską, która została scalona do `master` i usunięta (14.10.2026). W repozytorium istnieją wyłącznie dwie gałęzie (`master` oraz `v1-stable`).
